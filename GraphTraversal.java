@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class GraphTraversal {
 
@@ -63,7 +64,34 @@ public class GraphTraversal {
 
         while(!queue.isEmpty()){
             int size = queue.size();
+            List<Future<?>> futures = new ArrayList<>();
 
+            for(int i = 0; i < size; i++){
+                Node current = queue.poll();
+                output.add(current.name);
+
+                // process children
+                for(Node child : current.children){
+                    synchronized (child) {   // prevent race condition
+                        child.parentCount--;
+                        if(child.parentCount == 0){
+                            futures.add(executor.submit(() -> {
+                                synchronized (queue) {
+                                    queue.add(child);
+                                }
+                            }));
+                        }
+                    }
+                }
+            }
+            for(Future<?> future : futures){
+                try {
+                    future.get();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
