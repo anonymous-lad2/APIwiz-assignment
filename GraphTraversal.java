@@ -1,8 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GraphTraversal {
 
@@ -52,6 +50,20 @@ public class GraphTraversal {
             parent.children.add(child);   // parent -> child
             child.parents.add(parent);    // child -> parent
             child.parentCount++;
+        }
+
+        helper(vertexMap.get(1));   // starting node will always have a key 1
+    }
+
+    private static void helper(Node root){
+        ExecutorService executor = Executors.newCachedThreadPool();   // for parallel execution
+        Queue<Node> queue = new LinkedList<>();   // Bfs traversal
+        List<String> output = Collections.synchronizedList(new ArrayList<>());
+        queue.add(root);
+
+        while(!queue.isEmpty()){
+            int size = queue.size();
+
         }
     }
 }
