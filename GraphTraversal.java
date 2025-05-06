@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
+import java.util.Map;
 
 public class GraphTraversal {
 
@@ -24,6 +27,16 @@ public class GraphTraversal {
 //        System.out.print("goal: ");
 //        System.out.println("Traverse the entire graph starting from the root node, ensuring each node is executed once");
 
+        Scanner ob = new Scanner(System.in);
+        int N = ob.nextInt();
+        ob.nextLine();
+        Map<Integer, Node> vertexMap = new HashMap<>();
 
+        for(int i = 0; i < N; i++){
+            String[] parts = ob.nextLine().split(":");
+            int id = Integer.parseInt(parts[0]);
+            String name = parts[1];
+            vertexMap.put(id, new Node(id, name));
+        }
     }
 }
