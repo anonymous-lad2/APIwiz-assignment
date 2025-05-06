@@ -38,5 +38,20 @@ public class GraphTraversal {
             String name = parts[1];
             vertexMap.put(id, new Node(id, name));
         }
+
+        int M = ob.nextInt();
+        ob.nextLine();
+        for(int i = 0; i < M; i++){
+            String[] parts = ob.nextLine().split(":");
+            int from = Integer.parseInt(parts[0]);
+            int to = Integer.parseInt(parts[1]);
+
+            Node parent = vertexMap.get(from);
+            Node child = vertexMap.get(to);
+
+            parent.children.add(child);   // parent -> child
+            child.parents.add(parent);    // child -> parent
+            child.parentCount++;
+        }
     }
 }
