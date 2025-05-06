@@ -93,5 +93,13 @@ public class GraphTraversal {
                 }
             }
         }
+
+        executor.shutdown();
+
+        // result:
+        for(String name : output){
+            System.out.println(name);
+        }
+        System.out.println(output.size());
     }
 }
